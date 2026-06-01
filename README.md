@@ -1,24 +1,19 @@
 
-**Assessment 1.2 (Total Marks **20**)**
+**Travel Expense Tracker Project**
 
-Assignment: **Software requirements analysis and design (**Full-Stack CRUD Application Development with DevOps Practices**)**
-
+The Travel Expense Tracker is a web-based application developed to help users manage and monitor their travel-related expenses in a simple and organised way. The system allows users to record daily travel expenses such as accommodation, transport, meals, fuel, and other trip-related costs. Users can easily add, update, view, and delete their expense records through a user-friendly dashboard.
+The main purpose of this project is to provide travellers with a convenient digital solution for tracking spending during trips and maintaining accurate expense records. Instead of manually managing receipts or writing expenses on paper, users can store all their travel expenses in one centralised platform and review their spending anytime.
+The system also includes an admin panel that allows administrators to manage users, monitor expense records, and oversee the overall operation of the application. The project is designed with both usability and functionality in mind, ensuring that users can navigate the system easily while performing essential CRUD (Create, Read, Update, Delete) operations.
+This project demonstrates the complete software development lifecycle, including requirement analysis, system design, UI/UX design, backend and frontend development, project management, version control, deployment, and CI/CD integration. The application is developed using modern web technologies including React.js, Node.js, MongoDB, GitHub, JIRA, Figma, and AWS deployment services.
 
 ---
 
 **Objective**
 
-For this assessment, you have already been assigned a project. Your task is to develop a system that implements CRUD (Create, Read, Update, Delete) operations based on the selected project. The system should include both a user panel and an admin panel. Depending on the nature of your chosen project, you may decide how many CRUD operations are required to support the functionality of the system. You have been provided with a starter project that includes user authentication using Node.js, React.js, and MongoDB, your should extend this application based on your assigned project requirements. Ensure that the implemented features are appropriate and meaningful for your selected project. Your project should include the following:
-In this assignment you will complete the following tasks:
+The Travel Expense Tracker is designed as a real-world application that can be used by individuals, business travellers, and organisations to manage travel-related expenses more efficiently. In many situations, people still rely on paper receipts, spreadsheets, or manual calculations to keep track of expenses during trips. This process can become time-consuming, unorganised, and difficult to manage, especially when travelling frequently or handling multiple expenses each day.
+The purpose of this system is to simplify expense tracking by providing users with a digital platform where they can record and manage all travel expenses in one place. Users can enter details such as expense category, amount, date, location, and descriptions, allowing them to maintain accurate records of their spending throughout a trip. The system also helps users monitor their budgets and review spending patterns more effectively.
+From a business perspective, organisations can use this type of system to assist employees with travel reimbursement processes and expense reporting. Employees can submit their travel expenses through the application, while administrators can review and manage submitted records through the admin dashboard. This reduces paperwork, improves record management, and helps maintain transparency in financial tracking.
 
-* **Basic Version Control using GitHub**
-* **Development, CI/CD Integration for Automated Deployment**
-* **Project report**
-
- 
----
-
-**GitHub link of the starter project: **[https://github.com/nahaQUT/sampleapp_IFQ636.git](https://github.com/nahaQUT/sampleapp_IFQ636.git)
 
 ---
 
