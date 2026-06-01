@@ -11,23 +11,32 @@ runs-on: self-hosted
 
 ```
 steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
+  - name: Pull latest code
+    run: |
+      cd ~/ifq636-travelexptet
+      git pull origin main
 
   - name: Install dependencies
-    run: npm run install-all
+    run: |
+      cd ~/ifq636-travelexptet
+      npm install
+      cd frontend && npm install
+      cd ../backend && npm install
 
   - name: Build frontend
     run: |
-      cd frontend
+      cd ~/ifq636-travelexptet/frontend
       npm run build
 
   - name: Restart backend
-    run: pm2 restart backend
+    run: |
+      pm2 restart backend
 
   - name: Restart frontend
-    run: pm2 restart frontend
+    run: |
+      pm2 restart frontend
 
   - name: Save PM2
-    run: pm2 save
+    run: |
+      pm2 save
 ```
