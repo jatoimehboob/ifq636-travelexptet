@@ -39,9 +39,7 @@ From a business perspective, organisations can use this type of system to assist
 * npm start
 
 ## Test Credentials
-Its free and easy to register for test account, simply hit register button to register
-Email: test@test.com
-Password: Test123
+Its free and easy to register for test account or your live account, simply hit register button to set up your account.
 
 ## CI/CD and GitHub repository setup is done
 GitHub Actions has been implemented for automated deployment to AWS EC2.
