@@ -62,7 +62,9 @@ const updateUserProfile = async (req, res) => {
         user.email = email || user.email;
         user.university = university || user.university;
         user.address = address || user.address;
-
+if (req.body.password) {
+    user.password = req.body.password;
+}
         const updatedUser = await user.save();
         res.json({ id: updatedUser.id, name: updatedUser.name, email: updatedUser.email, university: updatedUser.university, address: updatedUser.address, token: generateToken(updatedUser.id) });
     } catch (error) {
