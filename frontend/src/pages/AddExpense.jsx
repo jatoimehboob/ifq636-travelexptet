@@ -28,7 +28,7 @@ const navigate = useNavigate();
       const token = localStorage.getItem("token");
 
       await axiosInstance.post(
-  "/api/expenses",
+  "/expenses",
         formData,
         {
           headers: {

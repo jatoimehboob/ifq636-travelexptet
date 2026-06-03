@@ -22,7 +22,7 @@ const Login = () => {
     try {
 
       const response = await axiosInstance.post(
-        "/api/auth/login",
+        "/auth/login",
         formData
       );
 

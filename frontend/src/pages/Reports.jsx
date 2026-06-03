@@ -24,7 +24,7 @@ const Reports = () => {
       const token = localStorage.getItem("token");
 
       const response = await axiosInstance.post(
-        "/api/expenses",
+        "/expenses",
         {
           headers: {
             Authorization: `Bearer ${token}`,

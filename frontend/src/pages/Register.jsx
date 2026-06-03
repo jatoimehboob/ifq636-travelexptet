@@ -19,7 +19,7 @@ const Register = () => {
     try {
 
       await axiosInstance.post(
-        "/api/auth/register",
+        "/auth/register",
         formData
       );
 

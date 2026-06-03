@@ -18,7 +18,7 @@ const Settings = () => {
         const token = localStorage.getItem("token");
 
         const response = await axiosInstance.get(
-          "/api/auth/profile",
+          "/auth/profile",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ const Settings = () => {
       const token = localStorage.getItem("token");
 
       await axiosInstance.put(
-        "/api/auth/profile",
+        "/auth/profile",
         formData,
         {
           headers: {

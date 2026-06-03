@@ -14,7 +14,7 @@ const ExpenseList = () => {
       const token = localStorage.getItem("token");
 
       const response = await axiosInstance.get(
-        "/api/expenses",
+        "/expenses",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -43,7 +43,7 @@ const ExpenseList = () => {
       const token = localStorage.getItem("token");
 
       await axiosInstance.delete(
-        `/api/expenses/${id}`,
+        `/expenses/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -68,7 +68,7 @@ const ExpenseList = () => {
       const token = localStorage.getItem("token");
 
       await axiosInstance.put(
-        `/api/expenses/${editingExpense._id}`,
+        `/expenses/${editingExpense._id}`,
         editingExpense,
         {
           headers: {
