@@ -18,10 +18,9 @@ app.use("/api/expenses", expenseRoutes);
 // Serve frontend build
 app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-app.get("*", (req, res) => {
+app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
 });
-
 // Start server
 if (require.main === module) {
   connectDB();
