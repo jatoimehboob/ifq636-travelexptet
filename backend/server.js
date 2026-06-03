@@ -18,7 +18,11 @@ app.use("/api/expenses", expenseRoutes);
 // Serve frontend build
 app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-app.get(/^\/(?!api).*/, (req, res) => {
+app.get("*", (req, res, next) => {
+  if (req.path.startsWith("/api")) {
+    return next();
+  }
+
   res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
 });
 // Start server
