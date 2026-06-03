@@ -5,7 +5,6 @@ The Travel Expense Tracker is designed as a real-world application that can be u
 
 The purpose of this system is to simplify expense tracking by providing users with a digital platform where they can record and manage all travel expenses in one place. Users can enter details such as expense category, amount, date, location, and descriptions, allowing them to maintain accurate records of their spending throughout a trip. The system also helps users monitor their budgets and review spending patterns more effectively.
 
-From a business perspective, organisations can use this type of system to assist employees with travel reimbursement processes and expense reporting. Employees can submit their travel expenses through the application, while administrators can review and manage submitted records through the admin dashboard. This reduces paperwork, improves record management, and helps maintain transparency in financial tracking.
 
 ## Technologies Used
 * React.js
