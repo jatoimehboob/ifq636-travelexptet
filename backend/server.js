@@ -18,11 +18,13 @@ app.use("/api/expenses", expenseRoutes);
 
 // Export the app object for testing
 if (require.main === module) {
-    connectDB();
-    // If the file is run directly, start the server
-    const PORT = process.env.PORT || 5001;
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-  }
+  connectDB();
 
+  const PORT = process.env.PORT || 5001;
 
-module.exports = app
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
