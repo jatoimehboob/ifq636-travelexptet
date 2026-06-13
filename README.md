@@ -41,8 +41,9 @@ The purpose of this system is to simplify expense tracking by providing users wi
 URL: http://3.27.15.150
 Test Account: test@account.com
 Pass: test
+
 OR
-You can register to create your test acount
+You can register to create your test account
 
 ## CI/CD and GitHub repository setup is done
 GitHub Actions has been implemented for automated deployment to AWS EC2.
