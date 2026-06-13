@@ -38,7 +38,11 @@ The purpose of this system is to simplify expense tracking by providing users wi
 * npm start
 
 ## Test Credentials
-Its free and easy to register for test account or your live account, simply hit register button to set up your account.
+URL: http://3.27.15.150
+Test Account: test@account.com
+Pass: test
+OR
+You can register to create your test acount
 
 ## CI/CD and GitHub repository setup is done
 GitHub Actions has been implemented for automated deployment to AWS EC2.
