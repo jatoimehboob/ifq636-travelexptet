@@ -16,6 +16,7 @@ import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 
 import { AuthProvider } from "./context/AuthContext";
+import Categories from './pages/Categories';
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Navigate } from "react-router-dom";
@@ -50,7 +51,10 @@ function Layout() {
             </ProtectedRoute>
           }
         />
-
+<Route
+  path="/categories"
+  element={<Categories />}
+/>
         <Route
           path="/add-expense"
           element={
