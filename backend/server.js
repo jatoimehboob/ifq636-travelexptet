@@ -2,7 +2,9 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const expenseRoutes = require("./routes/expenseRoutes");
+
+const expenseRoutes = require('./routes/expenseRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 dotenv.config();
 
@@ -11,19 +13,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// API routes
+// Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/expenses', expenseRoutes);
+console.log('Category routes loaded');
+app.use('/api/categories', categoryRoutes);
 
-// Start server
-if (require.main === module) {
-  connectDB();
+connectDB();
 
-  const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5001;
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
-
-module.exports = app;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
