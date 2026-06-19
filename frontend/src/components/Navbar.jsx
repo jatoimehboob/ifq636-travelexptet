@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { isAdmin } from "../utils/auth";
 import icon from "../logo/icon.png";
 
 const Navbar = () => {
@@ -60,13 +61,7 @@ const Navbar = () => {
 
           {settingsOpen && (
             <div className="absolute right-0 mt-2 w-44 bg-white text-gray-800 rounded shadow-lg overflow-hidden z-10">
-              <Link
-                to="/categories"
-                onClick={() => setSettingsOpen(false)}
-                className="block px-4 py-2 hover:bg-gray-100"
-              >
-                Categories
-              </Link>
+             
 
               <Link
                 to="/settings"
@@ -75,8 +70,27 @@ const Navbar = () => {
               >
                 My Profile
               </Link>
+
+              {isAdmin() && (
+                <Link
+                  to="/admin/users"
+                  onClick={() => setSettingsOpen(false)}
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Manage Users
+                </Link>
+                
+              )}{isAdmin() && (
+               <Link
+                to="/categories"
+                onClick={() => setSettingsOpen(false)}
+                className="block px-4 py-2 hover:bg-gray-100"
+              >
+                Manage Categories
+              </Link>)}
             </div>
           )}
+          
         </div>
 
         <button

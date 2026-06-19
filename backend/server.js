@@ -5,6 +5,7 @@ const connectDB = require('./config/db');
 
 const expenseRoutes = require('./routes/expenseRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/expenses', expenseRoutes);
 console.log('Category routes loaded');
 app.use('/api/categories', categoryRoutes);
+app.use('/api/users', userRoutes);
 
 connectDB();
 
