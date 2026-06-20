@@ -22,9 +22,9 @@ const Login = () => {
     try {
 
       const response = await axiosInstance.post(
-        "/auth/login",
-        formData
-      );
+  "/auth/login",
+  formData
+);
 
       login(response.data);
 

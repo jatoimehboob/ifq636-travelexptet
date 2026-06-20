@@ -14,8 +14,10 @@ import AddExpense from "./pages/AddExpense";
 import ExpenseList from "./pages/ExpenseList";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
+import AdminUsers from "./pages/AdminUsers";
 
 import { AuthProvider } from "./context/AuthContext";
+import Categories from './pages/Categories';
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Navigate } from "react-router-dom";
@@ -50,7 +52,10 @@ function Layout() {
             </ProtectedRoute>
           }
         />
-
+<Route
+  path="/categories"
+  element={<Categories />}
+/>
         <Route
           path="/add-expense"
           element={
@@ -83,6 +88,15 @@ function Layout() {
           element={
             <ProtectedRoute>
               <Settings />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute>
+              <AdminUsers />
             </ProtectedRoute>
           }
         />

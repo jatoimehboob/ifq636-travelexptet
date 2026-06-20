@@ -10,6 +10,15 @@ const protect = async (req, res, next) => {
             token = req.headers.authorization.split(' ')[1];
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             req.user = await User.findById(decoded.id).select('-password');
+
+            if (!req.user) {
+                return res.status(401).json({ message: 'Not authorized, user not found' });
+            }
+
+            if (!req.user.isActive) {
+                return res.status(403).json({ message: 'This account has been deactivated' });
+            }
+
             next();
         } catch (error) {
             res.status(401).json({ message: 'Not authorized, token failed' });
@@ -21,4 +30,13 @@ const protect = async (req, res, next) => {
     }
 };
 
-module.exports = { protect };
+// Must run after `protect`, since it relies on req.user being set
+const admin = (req, res, next) => {
+    if (req.user && req.user.role === 'admin') {
+        next();
+    } else {
+        res.status(403).json({ message: 'Not authorized as an admin' });
+    }
+};
+
+module.exports = { protect, admin };

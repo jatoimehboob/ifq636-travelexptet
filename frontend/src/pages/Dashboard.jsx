@@ -3,45 +3,44 @@ const Dashboard = () => {
 
     <div className="p-6 w-full bg-gray-100 min-h-screen">
 
-      <h1 className="text-3xl font-bold mb-8">
-        Dashboard
-      </h1>
+<h1 className="text-3xl font-bold mb-6">
+  Dashboard
+</h1>
 
-      <div className="grid grid-cols-3 gap-5">
+<div className="bg-white p-8 rounded shadow">
+  <h2 className="text-2xl font-semibold mb-4 text-blue-600">
+    Welcome to Travel Expense Tracker
+  </h2>
 
-        <div className="bg-white p-6 rounded shadow">
-          <h2 className="text-gray-500">
-            Total Expenses
-          </h2>
+  <p className="text-gray-600 mb-4">
+    Manage your travel expenses efficiently by adding, editing,
+    and tracking your expenses in one place.
+  </p>
 
-          <p className="text-3xl font-bold mt-2">
-            $12,500
-          </p>
-        </div>
+  <div className="space-y-3">
+    <div className="bg-blue-50 p-4 rounded">
+      📌 Add new travel expenses
+    </div>
 
-        <div className="bg-white p-6 rounded shadow">
-          <h2 className="text-gray-500">
-            Monthly Spending
-          </h2>
+    <div className="bg-blue-50 p-4 rounded">
+      📊 View and manage expense reports
+    </div>
 
-          <p className="text-3xl font-bold mt-2">
-            $4,200
-          </p>
-        </div>
+    <div className="bg-blue-50 p-4 rounded">
+      💰 Track your spending history
+    </div>
 
-        <div className="bg-white p-6 rounded shadow">
-          <h2 className="text-gray-500">
-            Total Trips
-          </h2>
+    <div className="bg-blue-50 p-4 rounded">
+      ⚙️ Update account settings securely
+    </div>
+  </div>
+</div>
 
-          <p className="text-3xl font-bold mt-2">
-            24
-          </p>
-        </div>
+
 
       </div>
 
-    </div>
+    
   );
 };
 
