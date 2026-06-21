@@ -1,22 +1,16 @@
-const express = require("express");
-
+const express = require('express');
 const router = express.Router();
 
+const { protect } = require('../middleware/authMiddleware');
+
 const {
-  addExpense,
+  createExpense,
   getExpenses,
-  updateExpense,
-  deleteExpense,
-} = require("../controllers/expenseController");
+  deleteExpense
+} = require('../controllers/expenseController');
 
-const { protect } = require("../middleware/authMiddleware");
-
-router.route("/")
-  .get(protect, getExpenses)
-  .post(protect, addExpense);
-
-router.route("/:id")
-  .put(protect, updateExpense)
-  .delete(protect, deleteExpense);
+router.post('/', protect, createExpense);
+router.get('/', protect, getExpenses);
+router.delete('/:id', protect, deleteExpense);
 
 module.exports = router;

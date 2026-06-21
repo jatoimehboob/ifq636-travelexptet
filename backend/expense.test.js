@@ -10,7 +10,7 @@ describe('Expense API Tests', () => {
   let expenseId;
 
   // -------------------------
-  // LOGIN
+  // LOGIN FIRST
   // -------------------------
   before((done) => {
     request(app)
@@ -20,17 +20,13 @@ describe('Expense API Tests', () => {
         password: 'Password123'
       })
       .end((err, res) => {
-
-        expect(res.status).to.equal(200);
-        expect(res.body).to.have.property('token');
-
         token = res.body.token;
         done();
       });
   });
 
   // -------------------------
-  // CREATE EXPENSE (SAFE)
+  // CREATE EXPENSE
   // -------------------------
   it('should create an expense', (done) => {
     request(app)
@@ -38,17 +34,12 @@ describe('Expense API Tests', () => {
       .set('Authorization', `Bearer ${token}`)
       .send({
         title: 'Test Expense',
-        amount: 100
+        amount: 100,
+        category: 'Food'
       })
       .end((err, res) => {
-
-        // IMPORTANT: prevent crash detection
-        expect(res.status).to.not.equal(500);
-
-        if (res.status === 201) {
-          expenseId = res.body._id;
-        }
-
+        expect(res.status).to.equal(201);
+        expenseId = res.body._id;
         done();
       });
   });
@@ -61,10 +52,8 @@ describe('Expense API Tests', () => {
       .get('/api/expenses')
       .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
-
-        expect(res.status).to.not.equal(500);
+        expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
-
         done();
       });
   });
@@ -73,16 +62,11 @@ describe('Expense API Tests', () => {
   // DELETE EXPENSE
   // -------------------------
   it('should delete an expense', (done) => {
-
-    if (!expenseId) return done();
-
     request(app)
       .delete(`/api/expenses/${expenseId}`)
       .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
-
-        expect(res.status).to.not.equal(500);
-
+        expect(res.status).to.equal(200);
         done();
       });
   });

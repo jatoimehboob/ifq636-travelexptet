@@ -1,53 +1,41 @@
-const chai = require("chai");
-const chaiHttp = require("chai-http");
-
-// IMPORTANT: make sure server exports app
-const server = require("../server");
-
-chai.use(chaiHttp);
+const chai = require('chai');
 const expect = chai.expect;
+const request = require('supertest');
 
-describe("Auth API Tests", () => {
+const app = require('../server');
 
-  it("should login user and return JWT token", (done) => {
-    chai.request(server)
-      .post("/api/auth/login")
+describe('Auth API Tests', () => {
+
+  let token;
+
+  it('should login user and return JWT token', (done) => {
+    request(app)
+      .post('/api/auth/login')
       .send({
-        email: "david@test.com",
-        password: "Password123"
+        email: 'david@test.com',
+        password: 'Password123'
       })
       .end((err, res) => {
 
-        expect(res).to.have.status(200);
-        expect(res.body).to.have.property("token");
-        expect(res.body.token).to.be.a("string");
+        expect(res.status).to.equal(200);
+        expect(res.body).to.have.property('token');
+
+        token = res.body.token;
 
         done();
       });
   });
 
-  it("should get user profile with valid token", (done) => {
-
-    chai.request(server)
-      .post("/api/auth/login")
-      .send({
-        email: "david@test.com",
-        password: "Password123"
-      })
+  it('should get user profile with valid token', (done) => {
+    request(app)
+      .get('/api/auth/profile')
+      .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
 
-        const token = res.body.token;
+        expect(res.status).to.equal(200);
+        expect(res.body).to.have.property('email');
 
-        chai.request(server)
-          .get("/api/auth/profile")
-          .set("Authorization", `Bearer ${token}`)
-          .end((err2, res2) => {
-
-            expect(res2).to.have.status(200);
-            expect(res2.body).to.have.property("email");
-
-            done();
-          });
+        done();
       });
   });
 
