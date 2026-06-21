@@ -178,8 +178,8 @@ const Reports = () => {
             {filteredExpenses.length === 0 ? (
               <tr>
                 <td className="p-3 text-gray-500" colSpan={4}>
-                  No expenses found for the selected range.
-                </td>
+                  No expenses found for the selected range
+                </td> 
               </tr>
             ) : (
               filteredExpenses.map((expense) => (
