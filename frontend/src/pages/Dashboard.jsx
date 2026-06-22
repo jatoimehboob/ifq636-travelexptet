@@ -229,7 +229,7 @@ const Dashboard = () => {
         {/* Pie chart */}
         <div className="bg-white rounded-2xl p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-gray-800 mb-6">
-            Expense Category Breakdown
+            Expense Category  
           </h2>
           {pieData.length === 0 ? (
             <p className="text-gray-400 text-sm">No expenses to display.</p>
