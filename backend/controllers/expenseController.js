@@ -91,9 +91,7 @@ const deleteExpense = async (req, res) => {
       return res.status(404).json({ message: 'Expense not found' });
     }
 
-    return res.status(200).json({
-      message: 'Expense deleted successfully'
-    });
+    return res.status(200).json({ message: 'Expense deleted successfully' });
   } catch (error) {
     console.error('Delete Expense Error:', error);
     return res.status(500).json({ message: error.message });
