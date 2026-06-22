@@ -48,29 +48,29 @@ const Dashboard = () => {
   const admin = isAdmin();
 
   useEffect(() => {
+    const loadDashboard = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const authHeader = { headers: { Authorization: `Bearer ${token}` } };
+        const requests = [
+          axiosInstance.get("/expenses", authHeader),
+          axiosInstance.get("/categories", authHeader),
+        ];
+        if (admin) requests.push(axiosInstance.get("/users", authHeader));
+
+        const results = await Promise.all(requests);
+        setExpenses(results[0].data);
+        setCategories(results[1].data);
+        if (admin && results[2]) setUserCount(results[2].data.length);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     loadDashboard();
-  }, []);
-
-  const loadDashboard = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const authHeader = { headers: { Authorization: `Bearer ${token}` } };
-      const requests = [
-        axiosInstance.get("/expenses", authHeader),
-        axiosInstance.get("/categories", authHeader),
-      ];
-      if (admin) requests.push(axiosInstance.get("/users", authHeader));
-
-      const results = await Promise.all(requests);
-      setExpenses(results[0].data);
-      setCategories(results[1].data);
-      if (admin && results[2]) setUserCount(results[2].data.length);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [admin]);
 
   const getCategoryName = (value) => {
     const match = categories.find((c) => c._id === value);
@@ -229,7 +229,7 @@ const Dashboard = () => {
         {/* Pie chart */}
         <div className="bg-white rounded-2xl p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-gray-800 mb-6">
-            Expense Category  
+            Expense Category Breakdown
           </h2>
           {pieData.length === 0 ? (
             <p className="text-gray-400 text-sm">No expenses to display.</p>
