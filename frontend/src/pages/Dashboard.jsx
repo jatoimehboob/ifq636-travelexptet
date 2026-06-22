@@ -47,10 +47,10 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const admin = isAdmin();
 
-  useEffect(() => {
-    loadDashboard();
-  }, []);
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
+useEffect(() => {
+  loadDashboard();
+}, []);
   const loadDashboard = async () => {
     try {
       const token = localStorage.getItem("token");
