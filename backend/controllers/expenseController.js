@@ -1,13 +1,16 @@
 const Expense = require("../models/Expense");
+const ExpenseService = require("../designpatterns/facade/ExpenseService");
+
+// FACADE: the controller no longer orchestrates validate -> save -> notify
+// itself. It hands the work to ExpenseService, which also publishes an
+// EXPENSE_ADDED event through the Observer (NotificationCenter).
+const expenseService = new ExpenseService();
 
 exports.addExpense = async (req, res) => {
 
   try {
 
-  const expense = await Expense.create({
-  ...req.body,
-  user: req.user.id,
-});
+    const expense = await expenseService.addExpense(req.body, req.user.id);
 
     res.status(201).json(expense);
 
@@ -15,7 +18,10 @@ exports.addExpense = async (req, res) => {
 
     console.log(error);
 
-    res.status(500).json({
+    // Validation errors from the Facade are client errors (400), not 500.
+    const isValidation = /Missing required field|greater than zero/.test(error.message);
+
+    res.status(isValidation ? 400 : 500).json({
       message: error.message,
     });
 

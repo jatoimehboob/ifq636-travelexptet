@@ -6,6 +6,18 @@ const connectDB = require('./config/db');
 const expenseRoutes = require('./routes/expenseRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const userRoutes = require('./routes/userRoutes');
+const reportRoutes = require('./routes/reportRoutes');
+
+// OBSERVER: register the notification observers once, at startup, against the
+// single shared NotificationCenter (Singleton). Everything that publishes an
+// event later (e.g. the expense Facade) reaches these listeners.
+const NotificationCenter = require('./designpatterns/observer/NotificationCenter');
+const { ConsoleLogObserver, InAppNotificationObserver } = require('./designpatterns/observer/observers');
+
+const inAppNotifications = new InAppNotificationObserver();
+NotificationCenter.getInstance()
+    .subscribe(new ConsoleLogObserver())
+    .subscribe(inAppNotifications);
 
 dotenv.config();
 
@@ -20,6 +32,7 @@ app.use('/api/expenses', expenseRoutes);
 console.log('Category routes loaded');
 app.use('/api/categories', categoryRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/reports', reportRoutes);
 
 connectDB();
 
