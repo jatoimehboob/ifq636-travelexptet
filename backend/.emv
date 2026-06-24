@@ -1,0 +1,5 @@
+MONGO_URI=mongodb+srv://travel_dbuser:pHscKT4zW24WOEOJ@cluster0.dbcpg5f.mongodb.net/taskdb?retryWrites=true&w=majority
+PORT=5001
+JWT_SECRET=travel_expense_secret
+
+
