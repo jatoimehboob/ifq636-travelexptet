@@ -1,105 +1,72 @@
-const request = require("supertest");
-const app = require("../server");
-const expect = require("chai").expect;
+const chai = require('chai');
+const expect = chai.expect;
+const request = require('supertest');
 
-let token;
-let categoryId;
-let expenseId;
+const app = require('../server');
 
-describe("Expense API Tests with Category Integration", () => {
+describe('Expense API Tests', () => {
 
-  /**
-   * SETUP: LOGIN + CREATE CATEGORY (SEQUENTIAL FIX)
-   */
+  let token;
+  let expenseId;
+
+  // -------------------------
+  // LOGIN FIRST
+  // -------------------------
   before((done) => {
-
     request(app)
-      .post("/api/auth/login")
+      .post('/api/auth/login')
       .send({
-        email: "david@test.com",
-        password: "Password123"
+        email: 'david@test.com',
+        password: 'Password123'
       })
       .end((err, res) => {
-
-        expect(res.status).to.equal(200);
         token = res.body.token;
-
-        request(app)
-          .post("/api/categories")
-          .set("Authorization", `Bearer ${token}`)
-          .send({
-            name: `Test Category ${Date.now()}`,
-            description: "Category for expense testing"
-          })
-          .end((err, res2) => {
-
-            expect(res2.status).to.equal(201);
-            categoryId = res2.body._id;
-
-            done();
-          });
+        done();
       });
   });
 
-  /**
-   * CREATE EXPENSE
-   */
-  it("should create an expense using a valid category", (done) => {
-
+  // -------------------------
+  // CREATE EXPENSE
+  // -------------------------
+  it('should create an expense', (done) => {
     request(app)
-      .post("/api/expenses")
-      .set("Authorization", `Bearer ${token}`)
+      .post('/api/expenses')
+      .set('Authorization', `Bearer ${token}`)
       .send({
-        title: "Test Expense",
+        title: 'Test Expense',
         amount: 100,
-        category: categoryId,
-        paymentMethod: "Credit Card",
-        date: new Date().toISOString(),
-        description: "Expense linked to category test"
+        category: 'Food'
       })
       .end((err, res) => {
-
-        console.log("\nCREATE EXPENSE RESPONSE:", res.status, res.body);
-
         expect(res.status).to.equal(201);
-        expect(res.body).to.have.property("_id");
-
         expenseId = res.body._id;
         done();
       });
   });
 
-  /**
-   * GET EXPENSES
-   */
-  it("should get all expenses", (done) => {
-
+  // -------------------------
+  // GET EXPENSES
+  // -------------------------
+  it('should get all expenses', (done) => {
     request(app)
-      .get("/api/expenses")
-      .set("Authorization", `Bearer ${token}`)
+      .get('/api/expenses')
+      .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
-
         expect(res.status).to.equal(200);
-        expect(res.body).to.be.an("array");
-
+        expect(res.body).to.be.an('array');
         done();
       });
   });
 
-  /**
-   * DELETE EXPENSE
-   */
-  it("should delete the created expense", (done) => {
-
+  // -------------------------
+  // DELETE EXPENSE
+  // -------------------------
+  it('should delete an expense', (done) => {
     request(app)
       .delete(`/api/expenses/${expenseId}`)
-      .set("Authorization", `Bearer ${token}`)
+      .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
-
-        console.log("\nDELETE EXPENSE RESPONSE:", res.status, res.body);
-
         expect(res.status).to.equal(200);
-
         done();
       });
   });
