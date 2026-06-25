@@ -19,7 +19,7 @@ const seedUser = async () => {
             name: "David",
             email: "david@test.com",
             password: "Password123",
-            role: "admin",
+            role: "user",
             isActive: true
         });
 
