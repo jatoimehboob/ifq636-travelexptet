@@ -1,20 +1,22 @@
-const express = require('express');
-const router = express.Router();
+const express = require("express");
 
-const authMiddleware = require('../middleware/authMiddleware');
-
-// IMPORTANT: destructure functions correctly
 const {
   createExpense,
   getExpenses,
   deleteExpense
-} = require('../controllers/expenseController');
+} = require("../controllers/expenseController");
 
-// ------------------------
-// ROUTES (ALL FUNCTIONS)
-// ------------------------
-router.post('/', authMiddleware, createExpense);
-router.get('/', authMiddleware, getExpenses);
-router.delete('/:id', authMiddleware, deleteExpense);
+const { protect } = require("../middleware/authMiddleware");
+
+const router = express.Router();
+
+// CREATE
+router.post("/", protect, createExpense);
+
+// GET ALL
+router.get("/", protect, getExpenses);
+
+// DELETE
+router.delete("/:id", protect, deleteExpense);
 
 module.exports = router;

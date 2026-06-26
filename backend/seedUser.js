@@ -1,38 +1,34 @@
-const mongoose = require("mongoose");
-require("dotenv").config();
-
+const mongoose = require("./config/db");
 const User = require("./models/User");
 
-const seedUser = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_URI);
+const seedUsers = async () => {
+  try {
+    console.log("Seeding users...");
 
-        console.log("MongoDB Connected");
+    // optional cleanup
+    await User.deleteMany({});
 
-        // Clean existing user (prevents duplicates)
-        await User.deleteMany({ email: "david@test.com" });
+    // ADMIN USER
+    await User.create({
+      email: "david@test.com",
+      password: "Password123",
+      role: "admin"
+    });
 
-        // IMPORTANT:
-        // DO NOT hash password here
-        // pre-save hook in User model will handle hashing
-        const user = await User.create({
-            name: "David",
-            email: "david@test.com",
-            password: "Password123",
-            role: "user",
-            isActive: true
-        });
+    // NORMAL USER (IMPORTANT FOR RBAC TEST)
+    await User.create({
+      email: "user@test.com",
+      password: "Password123",
+      role: "user"
+    });
 
-        console.log("✅ Seed user created successfully");
-        console.log("Email: david@test.com");
-        console.log("Password: Password123");
+    console.log("Users seeded successfully");
+    process.exit();
 
-        process.exit();
-
-    } catch (error) {
-        console.error("❌ Seed error:", error.message);
-        process.exit(1);
-    }
+  } catch (error) {
+    console.error("Seed error:", error);
+    process.exit(1);
+  }
 };
 
-seedUser();
+seedUsers();

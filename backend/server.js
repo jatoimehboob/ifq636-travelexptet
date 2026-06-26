@@ -15,37 +15,30 @@ app.use("/api/expenses", require("./routes/expenseRoutes"));
 
 // Health check
 app.get("/", (req, res) => {
-    res.status(200).send("API Running");
+  res.status(200).send("API Running");
 });
 
-// ------------------------------
-// DATABASE CONNECTION
-// ------------------------------
+// DB connection
 const connectDB = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_URI);
-
-        console.log("MongoDB Connected");
-
-    } catch (error) {
-        console.error("Database connection failed:", error.message);
-        process.exit(1);
-    }
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB Connected");
+  } catch (error) {
+    console.error("DB Error:", error.message);
+    process.exit(1);
+  }
 };
 
-connectDB();
+// ONLY START SERVER WHEN NOT TESTING
+if (process.env.NODE_ENV !== "test") {
+  connectDB();
 
-// ------------------------------
-// SERVER LISTENER
-// IMPORTANT: prevents tests from crashing when imported
-// ------------------------------
-if (require.main === module) {
-    const PORT = process.env.PORT || 5000;
+  const PORT = process.env.PORT || 5001;
 
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 }
 
-// Export for testing (Supertest/Mocha)
+// IMPORTANT: export for supertest/mocha
 module.exports = app;

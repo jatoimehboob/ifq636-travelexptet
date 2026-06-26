@@ -13,7 +13,7 @@ describe("RBAC Tests", () => {
     request(app)
       .post("/api/auth/login")
       .send({
-        email: "david@test.com",
+        email: "user@test.com",
         password: "Password123"
       })
       .end((err, res) => {

@@ -1,11 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-/**
- * AUTH MIDDLEWARE
- * - verifies token
- * - loads full user from DB
- */
 const protect = async (req, res, next) => {
   try {
     let token;
@@ -23,14 +18,20 @@ const protect = async (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // IMPORTANT: must match login payload { id }
+    // 🔥 IMPORTANT FIX: ensure correct field
     const user = await User.findById(decoded.id);
 
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
 
-    req.user = user;
+    // 🔥 FORCE CLEAN OBJECT
+    req.user = {
+      _id: user._id,
+      role: user.role,
+      email: user.email
+    };
+
     next();
 
   } catch (error) {
@@ -38,9 +39,6 @@ const protect = async (req, res, next) => {
   }
 };
 
-/**
- * RBAC - ADMIN ONLY
- */
 const adminOnly = (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({ message: "Unauthorized" });
@@ -53,7 +51,4 @@ const adminOnly = (req, res, next) => {
   return res.status(403).json({ message: "Access denied: Admin only" });
 };
 
-module.exports = {
-  protect,
-  adminOnly
-};
+module.exports = { protect, adminOnly };

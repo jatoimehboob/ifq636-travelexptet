@@ -1,7 +1,10 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-const loginUser = async (req, res) => {
+/**
+ * LOGIN CONTROLLER
+ */
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -14,7 +17,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign(
       {
         id: user._id,
-        role: user.role   // 🔥 REQUIRED FOR RBAC
+        role: user.role   // 🔥 CRITICAL FOR RBAC
       },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
@@ -32,5 +35,5 @@ const loginUser = async (req, res) => {
 };
 
 module.exports = {
-  loginUser
+  login
 };
