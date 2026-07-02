@@ -10,7 +10,7 @@ const {
 const { protect, adminOnly } = require("../middleware/authMiddleware");
 
 // 🔥 CRITICAL ORDER
-router.get("/", protect, adminOnly, getAllUsers);
+router.get("/users", protect, adminOnly, getUsers);
 router.put("/:id/role", protect, adminOnly, updateUserRole);
 router.put("/:id/status", protect, adminOnly, updateUserStatus);
 

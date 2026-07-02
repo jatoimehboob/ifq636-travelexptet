@@ -34,18 +34,24 @@ const protect = async (req, res, next) => {
     };
 
     next();
+
   } catch (error) {
     return res.status(401).json({ message: "Invalid token" });
   }
 };
 
 // =====================
-// RBAC MIDDLEWARE
+// RBAC MIDDLEWARE (FIXED)
 // =====================
 const adminOnly = (req, res, next) => {
-  if (!req.user || req.user.role !== "admin") {
+  if (!req.user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  if (req.user.role !== "admin") {
     return res.status(403).json({ message: "Access denied" });
   }
+
   next();
 };
 
