@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
+// =====================
+// AUTH MIDDLEWARE
+// =====================
 const protect = async (req, res, next) => {
   try {
     let token;
@@ -18,14 +21,12 @@ const protect = async (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // 🔥 IMPORTANT FIX: ensure correct field
     const user = await User.findById(decoded.id);
 
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
 
-    // 🔥 FORCE CLEAN OBJECT
     req.user = {
       _id: user._id,
       role: user.role,
@@ -33,22 +34,19 @@ const protect = async (req, res, next) => {
     };
 
     next();
-
   } catch (error) {
     return res.status(401).json({ message: "Invalid token" });
   }
 };
 
+// =====================
+// RBAC MIDDLEWARE
+// =====================
 const adminOnly = (req, res, next) => {
-  if (!req.user) {
-    return res.status(401).json({ message: "Unauthorized" });
+  if (!req.user || req.user.role !== "admin") {
+    return res.status(403).json({ message: "Access denied" });
   }
-
-  if (req.user.role === "admin") {
-    return next();
-  }
-
-  return res.status(403).json({ message: "Access denied: Admin only" });
+  next();
 };
 
 module.exports = { protect, adminOnly };
