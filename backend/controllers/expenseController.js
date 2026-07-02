@@ -77,10 +77,19 @@ const deleteExpense = async (req, res) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const expense = await Expense.findOneAndDelete({
-      _id: req.params.id,
-      user: req.user._id
-    });
+    let expense;
+
+    // 🔥 ADMIN CAN DELETE ANY EXPENSE
+    if (req.user.role === "admin") {
+      expense = await Expense.findByIdAndDelete(req.params.id);
+    } 
+    // 🔥 NORMAL USER CAN DELETE ONLY OWN EXPENSE
+    else {
+      expense = await Expense.findOneAndDelete({
+        _id: req.params.id,
+        user: req.user._id
+      });
+    }
 
     if (!expense) {
       return res.status(404).json({ message: "Expense not found" });
