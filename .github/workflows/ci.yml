@@ -25,19 +25,24 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version: '20'
 
       # =========================
-      # BACKEND TESTING (IMPORTANT FOR MARKS)
+      # BACKEND TESTING 
       # =========================
-      - name: Run backend tests
+
+      - name: Install backend dependencies
         run: |
-          cd backend
-          npm install
-          npm test
+         cd backend
+         npm install
+
+     - name: Run backend tests
+       run: |
+         cd backend
+         npm test
 
       # =========================
-      # FRONTEND BUILD (OPTIONAL BUT GOOD)
+      # FRONTEND BUILD 
       # =========================
       - name: Install frontend dependencies
         run: |
