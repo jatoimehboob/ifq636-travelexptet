@@ -5,7 +5,7 @@ const Expense = require("../models/Expense");
  */
 const createExpense = async (req, res) => {
   try {
-    if (!req.user) {
+    if (!req.user || !req.user._id) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
@@ -17,7 +17,7 @@ const createExpense = async (req, res) => {
     return res.status(201).json(expense);
   } catch (error) {
     console.error("Create Expense Error:", error);
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -26,7 +26,7 @@ const createExpense = async (req, res) => {
  */
 const getExpenses = async (req, res) => {
   try {
-    if (!req.user) {
+    if (!req.user || !req.user._id) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
@@ -35,7 +35,7 @@ const getExpenses = async (req, res) => {
     return res.status(200).json(expenses);
   } catch (error) {
     console.error("Get Expenses Error:", error);
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -79,12 +79,9 @@ const deleteExpense = async (req, res) => {
 
     let expense;
 
-    // 🔥 ADMIN CAN DELETE ANY EXPENSE
     if (req.user.role === "admin") {
       expense = await Expense.findByIdAndDelete(req.params.id);
-    } 
-    // 🔥 NORMAL USER CAN DELETE ONLY OWN EXPENSE
-    else {
+    } else {
       expense = await Expense.findOneAndDelete({
         _id: req.params.id,
         user: req.user._id
@@ -101,7 +98,7 @@ const deleteExpense = async (req, res) => {
 
   } catch (error) {
     console.error("Delete Expense Error:", error);
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: "Server error" });
   }
 };
 
